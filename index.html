@@ -1,0 +1,113 @@
+<HTML>
+  <HEAD>
+    <LINK href="./ressources/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </HEAD>
+  <BODY>
+	<script language = javascript>
+	function msg($a, $b) 
+	{
+		var xhr=null;
+                if (window.XMLHttpRequest) { 
+	          xhr = new XMLHttpRequest();
+		}
+		else if (window.ActiveXObject) {
+	       	  xhr = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		$script="./php/action.php?";
+		$matos="matos=" + $a;
+		$action="action=" + $b;
+		$cmd = $script + $matos + "&" + $action;
+		//alert ($cmd);
+		xhr.open("GET", $cmd , false);
+		xhr.send(null);
+	}
+
+	</script>
+  <div class="text-center">
+    <h1>Environnement : DEV <br>Télecommande</h1>
+    <p class="lead">OTO'Matic<br></p>
+  </div>
+  
+  </div>
+        <div class="row">
+                <div class="col-sm-1"> </div>
+                <div class="col-sm-3"><p class="lead">Salle à Manger</p> </div>
+                <div class="col-sm-2">
+                        <button type="button" class="btn btn-warning"  value="ON" onclick=msg('1','on')>Allumer</button>
+                </div>
+                <div class="col-sm-2">
+			<button type="button" class="btn btn-default"  value="OFF" onclick=msg('1','off')>Eteindre</button>
+                </div>
+        </div>
+	<div class="row">
+                <div class="col-sm-1"> </div>
+                <div class="col-sm-3"><p class="lead">Cuisine</p></div>
+                <div class="col-sm-2">
+			<button type="button" class="btn btn-warning"  value="ON" onclick=msg('2','on')>Allumer</button>
+                </div>
+                <div class="col-sm-2">
+	                <button type="button" class="btn btn-default"  value="OFF" onclick=msg('2','off')>Eteindre</button>
+                </div>
+        </div>
+        <div class="row">
+		<div class="col-sm-1"></div>
+                <div class="col-sm-3"><p class="lead">Cafetière</p></div>
+                <div class="col-sm-2">
+			<button type="button" class="btn btn-warning"  value="OFF" onclick=msg('3','on')>Allumer</button>
+                </div>
+                <div class="col-sm-2">
+			<button type="button" class="btn btn-default"  value="OFF" onclick=msg('3','off')>Eteindre</button>
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-3"><p class="lead">Garage</p></div>
+                <div class="col-sm-2">
+                	<button type="button" class="btn btn-warning"  value="OFF" onclick=msg('4','on')>Allumer</button>
+                </div>
+                <div class="col-sm-2">
+                        <button type="button" class="btn btn-default"  value="OFF" onclick=msg('4','off')>Eteindre</button>
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-3"><p class="lead">Terrasse</p></div>
+                <div class="col-sm-2">
+                       <button type="button" class="btn btn-warning"  value="OFF" onclick=msg('5','on')>Allumer</button>
+                </div>
+                <div class="col-sm-2">
+                        <button type="button" class="btn btn-default"  value="OFF" onclick=msg('5','off')>Eteindre</button>
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-3"><p class="lead">TOUT</p></div>
+                <div class="col-sm-2">
+                       <button type="button" class="btn btn-warning"  value="OFF" onclick=msg('99','on')>Allumer</button>
+                </div>
+                <div class="col-sm-2">
+                        <button type="button" class="btn btn-default"  value="OFF" onclick=msg('99','off')>Eteindre</button>
+                </div>
+        </div>
+<<<<<<< HEAD
+        <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-3"><p class="lead">Cuisine et SAM</p></div>
+                <div class="col-sm-2">
+                       <button type="button" class="btn btn-warning"  value="OFF" onclick=msg('9','on')>Allumer</button>
+                </div>
+                <div class="col-sm-2">
+                        <button type="button" class="btn btn-default"  value="OFF" onclick=msg('9','off')>Eteindre</button>
+                </div>
+        </div>
+
+
+
+
+
+=======
+>>>>>>> 2f1e3aa26b130e0d4746eaf66148ee2d32c4a439
+
+	<body>
+</HTML>
