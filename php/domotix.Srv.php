@@ -1,9 +1,11 @@
 <?php
-	include "domotixLib.php";
-
+        include "domotix.cfg";
+        include "domotix.lib.php";
+	
 	// Recherche des actions à réaliser sur les matériels 
 	// indiqués dans la table 'planning' de la base de données
 	// pour le critère jour heure minute du moment
+	
 	while(true) {
 		
 		$tabActions =  getActions();

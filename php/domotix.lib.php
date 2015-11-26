@@ -1,12 +1,3 @@
-<?php
-	
-	$idRFCmd = "1";
-	$codeRF = "12345261";
-	$dbaseName = "/var/www/sqliteDb/ti/domoz.db";
-	$cmd = "../ressources/radioEmission ";
-	$sqlCmd = "";
-	$logme="ON";
-	$logFile = "domotix.log";	
 
 	function getActions() {
 		
@@ -63,4 +54,4 @@
 		return;
 	}
 
-?>
+
