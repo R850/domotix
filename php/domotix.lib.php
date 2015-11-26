@@ -1,4 +1,4 @@
-
+<?php
 	function getActions() {
 		
 		$mois = date('n');
@@ -54,4 +54,4 @@
 		return;
 	}
 
-
+?>
