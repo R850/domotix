@@ -1,0 +1,178 @@
+<HTML>
+  <HEAD>
+    <LINK href="./ressources/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="./ressources/bootstrap-3.3.5-dist/js/jquery-1.11.3.min.js"></script>
+	<script src="./ressources/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>  
+  </HEAD>
+  <BODY>
+	<script language = javascript>
+	function msg($a, $b) 
+	{
+		var xhr=null;
+                if (window.XMLHttpRequest) { 
+	          xhr = new XMLHttpRequest();
+		}
+		else if (window.ActiveXObject) {
+	       	  xhr = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+	$script="./php/domotix.php?";
+	$matos="matos=" + $a;
+	$action="action=" + $b;
+	$cmd = $script + $matos + "&" + $action;
+	//alert ($cmd);
+	xhr.open("GET", $cmd , false);
+	xhr.send(null);
+}
+
+</script>
+<div class="text-center">
+<h1>Domoti'X<br></h1>
+<p class="lead">Environnement de DEV<br></p>
+</div>
+        
+<div class="container">
+      
+  <nav class="navbar navbar-inverse">
+    <ul class="nav navbar-nav">
+      <li> <a href="#">Accueil</a> </li>
+      <li> <a href="#">Liens</a> </li>
+      <li class="dropdown"> 
+        <a data-toggle="dropdown" href="#">Témoignages<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Dompteurs</a></li>
+   	  <li><a href="#"><span class="glyphicon glyphicon-picture"></span> Zoos</a></li>
+	  <li><a href="#"><span class="glyphicon glyphicon-screenshot"></span> Chasseurs</a></li>
+    	  <li class="divider"></li>
+          <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span> Autres témoignages</a></li> 
+        </ul>
+      </li>
+      <li> <a href="#">Références</a> </li>
+    </ul>
+  </nav>
+
+
+
+<div class="panel panel-success col-lg-9">
+  <h2>Télécommande</h2>
+  <div class="panel-heading"> 
+    <a href="#item1" data-toggle="collapse"><h4>INTERIEUR</h4></a> 
+  </div>
+  
+  <div id="item1" class="panel-collapse collapse in">
+    <div class="panel-body"> 
+      
+        <div class="row">
+          <div class="col-sm-1"> </div>
+          <div class="col-sm-5"><p class="lead">Salle à Manger</p> </div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-warning"  value="ON" onclick=msg('1','on')>ON</button>
+          </div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-default"  value="OFF" onclick=msg('1','off')>OFF</button>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col-sm-1"> </div>
+          <div class="col-sm-5"><p class="lead">Cuisine</p></div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-warning"  value="ON" onclick=msg('2','on')>ON</button>
+          </div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-default"  value="OFF" onclick=msg('2','off')>OFF</button>
+          </div>
+        </div>
+        
+	<div class="row">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-5"><p class="lead">Cafetière</p></div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-warning"  value="OFF" onclick=msg('3','on')>ON</button>
+          </div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-default"  value="OFF" onclick=msg('3','off')>OFF</button>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="panel-heading"> 
+    <a href="#item2" data-toggle="collapse"><h4>EXTERIEUR</h4></a> 
+  </div>
+  
+  <div id="item2" class="panel-collapse collapse">
+    <div class="panel-body">        
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-5"><p class="lead">Garage</p></div>
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-warning"  value="OFF" onclick=msg('4','on')>ON</button>
+        </div>
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-default"  value="OFF" onclick=msg('4','off')>OFF</button>
+        </div>
+      </div>
+    
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-5"><p class="lead">Terrasse</p></div>
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-warning"  value="OFF" onclick=msg('5','on')>ON</button>
+        </div>
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-default"  value="OFF" onclick=msg('5','off')>OFF</button>
+        </div>
+      </div> 
+    
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-5"><p class="lead">Volet roulant</p></div>
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-warning"  value="OFF" onclick=msg('7','on')>Fermer</button>
+        </div>
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-default"  value="OFF" onclick=msg('7','off')>Ouvrir</button>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+    
+    <div class="panel-heading">
+      <a href="#item3" data-toggle="collapse"><h4>GROUPES</h4> </a> 
+    </div>
+    
+    <div id="item3" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-5"><p class="lead">Cuisine et SAM</p></div>
+            <div class="col-sm-2">
+              <button type="button" class="btn btn-warning"  value="OFF" onclick=msg('9','on')>On</button>
+            </div>
+            <div class="col-sm-2">
+              <button type="button" class="btn btn-default"  value="OFF" onclick=msg('9','off')>OFF</button>
+            </div>
+	  </div>
+	</div>
+        <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-5"><p class="lead">TOUT</p></div>
+                <div class="col-sm-2">
+                       <button type="button" class="btn btn-warning"  value="OFF" onclick=msg('99','on')>ON</button>
+                </div>
+                <div class="col-sm-2">
+                        <button type="button" class="btn btn-default"  value="OFF" onclick=msg('99','off')>OFF</button>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+</div>
+
+</div> 
+
+<body>
+</HTML>
