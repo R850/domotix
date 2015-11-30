@@ -42,9 +42,27 @@
 
 	
 	function majStatus($a_matos, $a_action) {
-		$sqlCmd = "update materiel set etat='$a_action' where materielID=$a_matos";
-		logMe ("LIB : majStatus(\"$sqlCmd\")");
+		$qry = "Select groupe from materiel where materielID = $a_matos";
+		$sqlCmdMatos = "update materiel set etat='$a_action' where materielID=$a_matos";
+		$sqlCmdGroupe = "update materiel set etat='$a_action' where groupe=$a_matos";
+		
+		// On cherche le groupe auquel appartient le materiel// Si le matériel n'apartient à acun groupe alors on maj le status du matériel
+		// Si le matériel à un id différent du groupe alors on maj le status du matériel
+		// Si l'id materiel = l'id groupe alors on maj le status de tous les matériel qui appratiennent à ce groupe
 		$db = new sqlite3( $GLOBALS['dbaseName']);
+		$result = $db->query($qry);
+		$row = $result->fetchArray();
+		$group = $row[0];
+
+		if ( $group == $a_matos) {
+			$sqlCmd = $sqlCmdGroupe;
+		}
+		else {
+			$sqlCmd = $sqlCmdMatos;
+		}
+		
+		logMe ("LIB : majStatus(\"$sqlCmd\")");
+
 		$db->exec($sqlCmd);
 		$db->close();
 	}

@@ -35,9 +35,15 @@
 			  xhr = new ActiveXObject("Microsoft.XMLHTTP");
 		}
 		$script="./php/domotix.Get.php?";
-
+		
 		xhr.open("GET", $script , false);
 		xhr.send(null);		
+		/*
+		Récupère la réponse , traite les données, met en forme et affiche le résultat
+		*/
+		
+		
+		
 	}
 
 </script>
