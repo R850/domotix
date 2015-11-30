@@ -1,4 +1,14 @@
 <?php
+
+        function logMe($msg2log) {
+                $fp=fopen($GLOBALS['logFile'],"a+");
+                $horodatage = date('D d/n/Y - H:i:s ');
+                fwrite($fp,"$horodatage => $msg2log\n");
+                fclose($fp);
+                return true;
+        }
+
+
 	function getActions() {
 		
 		$mois = date('n');
@@ -10,48 +20,40 @@
 		$db = new sqlite3( $GLOBALS['dbaseName']);
                 $qry = "Select materielID, action from planning where mois=$mois and  jour=$jour and heure=$heure and minute=$minute";
                 
-		$ret = logMe ("LIB : RQT : $qry" );
+		$ret = logMe ("LIB : getActions(\"$qry\")" );
                 $result = $db->query($qry);
 		
                 while ($row = $result->fetchArray()){
-			logMe ("LIB : materiel = " .$row['materielID']."& action = ".$row['action']);
+			$matId = $row['materielID'];
+			$action = $row['action']; 
+			$ret = logMe ("LIB : getActions() :  materiel = $matId  action = $action");
 			$valeurs = $row['materielID'] ."&". $row['action'];
-                        logMe ("LIB : \$valeurs vaut : ($valeurs)");
+                        $ret = logMe ("LIB : getActions() : \$valeurs vaut : ($valeurs)");
 			$tabActions[] = $valeurs;
 		}		
 		
 		$db->close();
 
                 $taille = count($tabActions);
-                logMe("LIB : Nombre de donnée(s) à traiter : $taille");	
+                logMe("LIB : getActions() :  Nombre de donnée(s) à traiter : $taille");	
 		
 		return $tabActions;
 	}
 
 	
-	function logMe($msg2log) {
-			$fp=fopen($GLOBALS['logFile'],"a+");
-			$horodatage = date('D d/n/Y - H:i:s ');
-			fwrite($fp,"$horodatage => $msg2log\n");
-			fclose($fp);
-		return ;
-	}
-	
-	
 	function majStatus($a_matos, $a_action) {
-		$sqlCmd = "update materiel set etat='$a_action' where materielId=$a_matos;";
-		$ret = logMe ("LIB : MAJ ETAT MATERIEL : $sqlCmd" );
+		$sqlCmd = "update materiel set etat='$a_action' where materielID=$a_matos";
+		logMe ("LIB : majStatus(\"$sqlCmd\")");
 		$db = new sqlite3( $GLOBALS['dbaseName']);
 		$db->exec($sqlCmd);
 		$db->close();
-		return;
 	}
+
 
 	function executer($b_matos, $b_action) {
 		$cmd2exec = $GLOBALS['cmd'] . $GLOBALS['idRFCmd'] . " " . $GLOBALS['codeRF'] . " $b_matos $b_action";
-	 	shell_exec($cmd2exec);
-		$ret = logme("LIB : EXEC : $cmd2exec");
-		return;
+	 	$output = shell_exec($cmd2exec);
+		logme("LIB : executer(\"$cmd2exec\")");
 	}
 
 ?>
