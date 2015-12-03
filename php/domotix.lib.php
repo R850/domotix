@@ -10,15 +10,16 @@
 
 
 	function getActions() {
-		
+		$max = 99;
 		$mois = date('n');
-                $jour = date('N');
-                $heure = date('G');
-                $minute = date('i');
+        $jour = date('N');
+		$heure = date('G');
+        $minute = date('i');
+				
 		$tabActions = array();
 
 		$db = new sqlite3( $GLOBALS['dbaseName']);
-                $qry = "Select materielID, action from planning where mois=$mois and  jour=$jour and heure=$heure and minute=$minute";
+                $qry = "Select materielID, action from planning where (mois=$mois or mois=$max) and  (jour=$jour or jour=$max) and (heure=$heure or heure=$max) and (minute=$minute or minute=$max)";
                 
 		$ret = logMe ("LIB : getActions(\"$qry\")" );
                 $result = $db->query($qry);
@@ -37,7 +38,7 @@
                 $taille = count($tabActions);
                 logMe("LIB : getActions() :  Nombre de donnée(s) à traiter : $taille");	
 		
-		return $tabActions;
+		return $tabActions; 
 	}
 
 	
@@ -46,10 +47,7 @@
 		$sqlCmdMatos = "update materiel set etat='$a_action' where materielID=$a_matos";
 		$sqlCmdGroupe = "update materiel set etat='$a_action' where groupe=$a_matos";
 		
-		// On cherche le groupe auquel appartient le materiel// Si le matériel n'apartient à acun groupe alors on maj le status du matériel
-		// Si le matériel à un id différent du groupe alors on maj le status du matériel
-		// Si l'id materiel = l'id groupe alors on maj le status de tous les matériel qui appratiennent à ce groupe
-		$db = new sqlite3( $GLOBALS['dbaseName']);
+				$db = new sqlite3( $GLOBALS['dbaseName']);
 		$result = $db->query($qry);
 		$row = $result->fetchArray();
 		$group = $row[0];
