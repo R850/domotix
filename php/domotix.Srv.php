@@ -1,6 +1,6 @@
 <?php
-	
-        include "domotix.cfg";
+        
+	include "domotix.cfg";
         include "domotix.lib.php";
 
 	// Recherche des actions à réaliser sur les matériels 

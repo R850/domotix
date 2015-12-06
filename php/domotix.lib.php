@@ -1,48 +1,48 @@
 <?php
 
-    function logMe($msg2log) {
+	function logMe($msg2log) {
 		$fp=fopen($GLOBALS['logFile'],"a+");
 		$horodatage = date('D d/n/Y - H:i:s ');
 		fwrite($fp,"$horodatage => $msg2log\n");
 		fclose($fp);
-		return true;
 	}
 
+	
 
 	function getActions() {
 		
-		$mois = date('n');
+	$mois = date('n');
         $semaine = date('W');
-		$jour = date('w');
-		$heure = date('G');
+	$jour = date('w');
+	$heure = date('G');
         $minute = date('i');
 				
-		$tabAction = array();
+	$tabAction = array();
 
-		$db = new sqlite3( $GLOBALS['dbaseName']);
-			$qry = "SELECT scenario.materielID as materielID, scenario.action as action FROM 'scenario', 'planning' ";
-			$qry .= "WHERE scenario.nom =planning.scenario ";
-			$qry .= "AND planning.semaine = $semaine " ;
-			$qry .= "AND scenario.jour = $jour ";
-			$qry .= "AND scenario.heure = $heure ";
-			$qry .= "AND scenario.minute = $minute";	
+	$db = new sqlite3( $GLOBALS['dbaseName']);
+		$qry = "SELECT scenario.materielID as materielID, scenario.action as action FROM 'scenario', 'planning' ";
+		$qry .= "WHERE scenario.nom =planning.scenario ";
+		$qry .= "AND planning.semaine = $semaine " ;
+		$qry .= "AND scenario.jour = $jour ";
+		$qry .= "AND scenario.heure = $heure ";
+		$qry .= "AND scenario.minute = $minute";	
 			
-			logMe ("LIB : getActions(\"$qry\")" );
+		logMe ("LIB : getActions(\"$qry\")" );
 			
-			$result = $db->query($qry);
+		$result = $db->query($qry);
 			
-			while ($row = $result->fetchArray()){
-				$matId = $row['materielID'];
-				$action = $row['action']; 
-				logMe ("LIB : getActions() :  materiel = $matId  action = $action");
-				$ligne = $matId ."&". $action;
-				$tabAction[] = $ligne;
-			}		
+		while ($row = $result->fetchArray()){
+			$matId = $row['materielID'];
+			$action = $row['action']; 
+			logMe ("LIB : getActions() :  materiel = $matId  action = $action");
+			$ligne = $matId ."&". $action;
+			$tabAction[] = $ligne;
+		}		
 
 		$db->close();
 
-        $taille = count($tabAction);
-        logMe("LIB : getActions() :  Nombre de donnée(s) à traiter : $taille");	
+        	$taille = count($tabAction);
+	        logMe("LIB : getActions() :  Nombre de donnée(s) à traiter : $taille");	
 		
 		return $tabAction; 
 	}
@@ -91,7 +91,7 @@
 			logme("ERROR : $msg");
 		}
 
-		$msg = "Excution $b_matos $b_action.";
+		$msg = "Excution de $cmd2exec";
 		logme($msg);
 	}
 
