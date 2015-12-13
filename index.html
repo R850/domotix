@@ -9,43 +9,80 @@
   </HEAD>
   <BODY>
 	<script language = javascript>
+	
+	function getXMLHttpRequest() {
+		var xhr = null;
+		
+		if (window.XMLHttpRequest || window.ActiveXObject) {
+			if (window.ActiveXObject) {
+				try {
+					xhr = new ActiveXObject("Msxml2.XMLHTTP");
+				} catch(e) {
+					xhr = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+			} else {
+				xhr = new XMLHttpRequest(); 
+			}
+		} else {
+			alert("Votre navigateur ne supporte pas l'objet XMLHTTPRequest...");
+			return null;
+		}
+		
+		return xhr;
+	}	
+	
+	
 	function msg($a, $b) {
-		var xhr=null;
-                if (window.XMLHttpRequest) { 
-	          xhr = new XMLHttpRequest();
-		}
-		else if (window.ActiveXObject) {
-	       	  xhr = new ActiveXObject("Microsoft.XMLHTTP");
-		}
+
+		// Prépare l'appel au scrit php en lui passant les variables
 		$script="./php/domotix.Do.php?";
 		$matos="matos=" + $a;
 		$action="action=" + $b;
 		$cmd = $script + $matos + "&" + $action;
 
-		xhr.open("GET", $cmd , false);
+		// Créer un nouvel objet httprequest
+		var xhr=null;
+		xhr = getXMLHttpRequest();
+				
+		// On vérifie le code retour du dernier état de la requete http, 
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+			}
+		};
+
+		
+		xhr.open("GET", $cmd ,true);
 		xhr.send(null);
 	}
 
-	function dmxGetStatus() {
-		var xhr=null;
-				if (window.XMLHttpRequest) { 
-			  xhr = new XMLHttpRequest();
-		}
-		else if (window.ActiveXObject) {
-			  xhr = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		$script="./php/domotix.Get.php?";
+
+	function getStatus(callback) {
+	
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				//alert('Etat : ' + xhr.readyState + '\nStatus : ' + xhr.status + '\n' + xhr.responseText);
+				callback(xhr.responseText);
+			}
+		};
 		
-		xhr.open("GET", $script , false);
-		xhr.send(null);		
-		/*
-		Récupère la réponse , traite les données, met en forme et affiche le résultat
-		*/
+		xhr.open("GET", "./php/domotix.Get.php", true);
+		xhr.send(null);
 	}
+	function readData(oData){
+		var obj = JSON.parse(oData); 
+		
+		var chaine = '' ;
+		
+		for (i=0; i<obj.materiel.length; i++) {
+			chaine += obj.materiel[i].nom + " : " + obj.materiel[i].localisation  + "........... " +  obj.materiel[i].etat + '<br>';
+		}
+		document.getElementById("etat").innerHTML = chaine;
+		
+	}
+	
+	
 </script>
-	
-	
-   
 
 <div class="container">
 	<div class="row">
@@ -68,10 +105,10 @@
 					<h4 class="modal-title">Version 2.0</h4>
 				</div>
 				<div class="modal-body">
-	
-							Version : 2.0<BR>
+							Version : 2.0.1<BR>
 							Base de données : INTEGRATION<BR>
-							Environnement : DEV
+							Environnement : DEV<BR>
+
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-inverse" data-dismiss="modal"><i class="icon icon-times icon-lg"></i> Fermer</button>
@@ -79,8 +116,28 @@
 			</div>
 		</div>
 	</div>
- 	
+ 	<!-- Modale Etat -->
+	<div class="modal fade" id="ModalEtat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">ETAT des matériels</h4>
+				</div>
+				<div class="modal-body">
 	
+							<div id="resultat">
+							
+							<div id="etat"></div>
+							</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-inverse" data-dismiss="modal"><i class="icon icon-times icon-lg"></i> Fermer</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="row">
 		<div class="col-sm-7">	  
 			<nav class="navbar navbar-default">
@@ -90,13 +147,13 @@
 					<li class="dropdown" data-toggle="tab"> 
 						<a data-toggle="dropdown" href="#"> Outils<b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="#ModalAbout"><span class="glyphicon glyphicon-stats"></span> Etat</a></li>
+								<li><a data-toggle="modal" onclick=getStatus(readData) href="#ModalEtat"><span class="glyphicon glyphicon-stats"></span> Etat</a></li>
 								<li class="divider"></li>
-								<li><a href="#"><span class="glyphicon glyphicon-cog"></span> Administrer</a></li> 
+								<li><a href="javascript:getStatus(readData)"><span class="glyphicon glyphicon-cog"></span> Administrer</a></li> 
 							</ul>
 					</li>
 					<li data-toggle="tab"> 
-						<a data-toggle="modal" href="#ModalAbout" ><i class="icon icon-sign-out icon-lg"></i> A propos de</a> 
+						<a data-toggle="modal" onclick=getStatus(readData) href="#ModalAbout" ><i class="icon icon-sign-out icon-lg"></i> A propos de</a> 
 					</li>
 					
 				</ul>

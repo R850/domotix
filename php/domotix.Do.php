@@ -1,8 +1,11 @@
 <?php
 	include "domotix.cfg";
 	include "domotix.lib.php";
-
-	$ret = executer($_GET['matos'],$_GET['action']);
-	$ret = majStatus($_GET['matos'],$_GET['action']);
+	
+	$matos=(isset($_GET['matos'])) ? $_GET['matos'] : NULL;
+	$action =(isset($_GET['action'])) ? $_GET['action'] : NULL;
+	
+	$ret = executer($matos,$action);
+	$ret = majStatus($matos,$action);
 	
 ?>
