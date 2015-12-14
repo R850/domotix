@@ -1,4 +1,6 @@
 <?php
+	
+	include "domotix.cfg";
 
 	function logMe($msg2log) {
 		$fp=fopen($GLOBALS['logFile'],"a+");
@@ -7,8 +9,31 @@
 		fclose($fp);
 	}
 
-	
+	function getStatus() {
+		$db = new sqlite3($GLOBALS['dbaseName']);
+		$qry = "Select materielID, nom, localisation, etat from materiel where groupe <> materielID";
+		$jsonData = null;
+		
+		$result = $db->query($qry);
 
+		
+		$jsonData = "{ \"materiel\" : [ " ;
+		while ($row = $result->fetchArray()) {
+			if ($jsonData != "{ \"materiel\" : [ ") {
+				$jsonData .=" ,";
+			}
+			$jsonData .= utf8_encode("{ \"ID\":\"$row[0]\" ,") ;
+			$jsonData .= utf8_encode("\"nom\":\"$row[1]\" ,");
+			$jsonData .= utf8_encode("\"localisation\":\"$row[2]\" ,");
+			$jsonData .= utf8_encode("\"etat\":\"$row[3]\" } ");
+			
+		}	
+		
+		$jsonData .= " ]}";
+		echo $jsonData; 
+	}
+	
+	
 	function getActions() {
 		
 	$mois = date('n');

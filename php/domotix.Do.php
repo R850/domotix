@@ -1,5 +1,5 @@
 <?php
-	include "domotix.cfg";
+	
 	include "domotix.lib.php";
 	
 	$matos=(isset($_GET['matos'])) ? $_GET['matos'] : NULL;
