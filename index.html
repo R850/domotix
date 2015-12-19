@@ -9,7 +9,9 @@
   </HEAD>
   <BODY>
 	<script language = javascript>
-	
+//--------------------------------------------------------------------------------	
+// Création d'un objet Ajax générique
+//--------------------------------------------------------------------------------	
 	function getXMLHttpRequest() {
 		var xhr = null;
 		
@@ -30,11 +32,14 @@
 		
 		return xhr;
 	}	
-	
-	
+//--------------------------------------------------------------------------------	
+// Traitement des messages à envoyer aux matériels
+// Entrée :
+// - Identifiant deu matériel
+// - Etat souhaité (on / off)
+//--------------------------------------------------------------------------------
 	function msg($a, $b) {
-
-		// Prépare l'appel au scrit php en lui passant les variables
+		// Prépare l'appel au scrit php en lui passant les variables matos et etat.
 		$script="./php/domotix.Do.php?";
 		$matos="matos=" + $a;
 		$action="action=" + $b;
@@ -44,20 +49,27 @@
 		var xhr=null;
 		xhr = getXMLHttpRequest();
 				
-		// On vérifie le code retour du dernier état de la requete http, 
+		// On vérifie le code retour du dernier état de la requete http,
+		// mais on n'en fait rien de spécial
+// On pourrait très bien traiter le retour du script PHP en cas d'erreur 
+// avec un callback		
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
 			}
 		};
-
-		
 		xhr.open("GET", $cmd ,true);
 		xhr.send(null);
 	}
 
-
-	function getStatus(callback) {
-	
+//--------------------------------------------------------------------------------	
+// Récupération du statut des matériels
+// Entrée :
+// - le nom  de la fonction  callback de traitement de l'envoie des données 
+//   par le script PHP
+//--------------------------------------------------------------------------------
+	function doRequest(callback) {
+		
+		// Création  de l'objet request par l'appel de la fonction générique
 		var xhr = getXMLHttpRequest();
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
@@ -65,11 +77,33 @@
 				callback(xhr.responseText);
 			}
 		};
-		
 		xhr.open("GET", "./php/domotix.Get.php", true);
 		xhr.send(null);
 	}
-	function readData(oData){
+	
+//--------------------------------------------------------------------------------	
+// Traitement de la response renvoyé par la fonction  "doRequest(callBack)"
+// Entrée :
+// - objet conteneur données
+//--------------------------------------------------------------------------------	
+	function readStatus(oData){
+		var obj = JSON.parse(oData);  
+		
+		var chaine = '' ;
+		
+		for (i=0; i<obj.materiel.length; i++) {
+			chaine += obj.materiel[i].nom + " : " + obj.materiel[i].localisation  + "........... " +  obj.materiel[i].etat + '<br>';
+		}
+		document.getElementById("etat").innerHTML = chaine;
+	}
+
+
+//--------------------------------------------------------------------------------	
+// Modele de fonction de callBack passée en paramètre de 
+// la fonction generique doRequest
+// 
+//--------------------------------------------------------------------------------	
+	function readModele(oData){
 		var obj = JSON.parse(oData); 
 		
 		var chaine = '' ;
@@ -78,8 +112,8 @@
 			chaine += obj.materiel[i].nom + " : " + obj.materiel[i].localisation  + "........... " +  obj.materiel[i].etat + '<br>';
 		}
 		document.getElementById("etat").innerHTML = chaine;
-		
-	}
+	}	
+	
 	
 	
 </script>
@@ -147,7 +181,7 @@
 					<li class="dropdown" data-toggle="tab"> 
 						<a data-toggle="dropdown" href="#"> Outils<b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a data-toggle="modal" onclick=getStatus(readData) href="#ModalEtat"><span class="glyphicon glyphicon-stats"></span> Etat</a></li>
+								<li><a data-toggle="modal" onclick=doRequest(readStatus) href="#ModalEtat"><span class="glyphicon glyphicon-stats"></span> Etat</a></li>
 								<li class="divider"></li>
 								<li><a href="javascript:getStatus(readData)"><span class="glyphicon glyphicon-cog"></span> Administrer</a></li> 
 							</ul>
