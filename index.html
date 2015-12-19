@@ -61,7 +61,6 @@
 		var xhr = getXMLHttpRequest();
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
-				//alert('Etat : ' + xhr.readyState + '\nStatus : ' + xhr.status + '\n' + xhr.responseText);
 				callback(xhr.responseText);
 			}
 		};
@@ -69,7 +68,9 @@
 		xhr.open("GET", "./php/domotix.Get.php", true);
 		xhr.send(null);
 	}
-	function readData(oData){
+	
+
+	function readStatus(oData){
 		var obj = JSON.parse(oData); 
 		
 		var chaine = '' ;
@@ -82,21 +83,59 @@
 	}
 	
 	
+	
+	
+	
+	function getData(callback) {
+	
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				callback(xhr.responseText);
+			}
+		};
+		
+		xhr.open("GET", "./php/domotix.Get.php", true);
+		xhr.send(null);
+	}
+	
+
+	function readMatosLists(oData){
+		var obj = JSON.parse(oData); 
+		
+		var chaine = '' ;
+		
+		for (i=0; i<obj.materiel.length; i++) {
+		//chaine += obj.materiel[i].nom + " : " + obj.materiel[i].localisation  + "........... " +  obj.materiel[i].etat + '<br>';
+		
+chaine +=   <div class="row">
+				<div class="col-sm-1"> </div>
+				<div class="col-sm-3"><p class="lead">Salle à Manger</p> </div>
+				<div class="col-sm-1">
+					<button type="button" class="btn btn-warning"  value="ON" onclick=msg('1','on')>ON</button>
+				</div>
+				<div class="col-sm-3">
+					<button type="button" class="btn btn-default"  value="OFF" onclick=msg('1','off')>OFF</button>
+				</div>
+			</div>			
+		}
+		document.getElementById("etat").innerHTML = chaine;
+		
+	}
+		
+
+
+
+
+
+
+	
 </script>
 
-<div class="container">
-	<div class="row">
-		<div class="col-sm-7">
-			<div class="text-center">
-				<h1>Domoti'X<br></h1>
-				<p class="lead">Environnement de DEVELOPPEMENT <br></p>
-			</div>
-		</div>
-	</div> 
-
-  	
-	<!-- Modale A propos -->
-
+<div class="container"> 	
+	<!-- 
+	Modale A propos 
+	-->
 	<div class="modal fade" id="ModalAbout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -116,7 +155,14 @@
 			</div>
 		</div>
 	</div>
- 	<!-- Modale Etat -->
+	<!-- 
+	Modale A propos 
+	-->
+
+	
+ 	<!-- 
+	Modale Etat 
+	-->
 	<div class="modal fade" id="ModalEtat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -137,7 +183,14 @@
 			</div>
 		</div>
 	</div>
-
+ 	<!-- 
+	Modale Etat 
+	-->
+	
+	
+	<!-- 
+	Nav Bar 
+	-->
 	<div class="row">
 		<div class="col-sm-7">	  
 			<nav class="navbar navbar-default">
@@ -147,7 +200,7 @@
 					<li class="dropdown" data-toggle="tab"> 
 						<a data-toggle="dropdown" href="#"> Outils<b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a data-toggle="modal" onclick=getStatus(readData) href="#ModalEtat"><span class="glyphicon glyphicon-stats"></span> Etat</a></li>
+								<li><a data-toggle="modal" onclick=getStatus(readStatus) href="#ModalEtat"><span class="glyphicon glyphicon-stats"></span> Etat</a></li>
 								<li class="divider"></li>
 								<li><a href="javascript:getStatus(readData)"><span class="glyphicon glyphicon-cog"></span> Administrer</a></li> 
 							</ul>
@@ -160,8 +213,14 @@
 			</nav>
 		</div>
 	</div>	
+	<!-- 
+	Nav Bar 
+	-->	
 	
 	
+	<!-- 
+	Interieur 
+	-->	
 	<div class="tab-content" >
 		<div id="interieur" class="tab-pane fade active in">
 			<div class="row">
@@ -230,9 +289,16 @@
 				</div>
 			</div>			
 		</div>
+	<!-- 
+	Interieur 
+	-->			
 
+	<!-- 
+	Exterieur 
+	-->	
+		
 		<div id="exterieur" class="tab-pane fade">
-			<div class="row">
+			<!--<div class="row">
 				<div class="col-sm-1"></div>
 				<div class="col-sm-3"><p class="lead">Garage</p></div>
 				<div class="col-sm-1">
@@ -275,7 +341,12 @@
 					<button type="button" class="btn btn-default"   onclick=msg('15','off')>OFF</button>
 				</div>
 			</div>
+			-->
 		</div>
+	<!-- 
+	Exterieur 
+	-->	
+	
 	</div>	
 </div>
 
