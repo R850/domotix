@@ -11,7 +11,7 @@
 
 	function getStatus() {
 		$db = new sqlite3($GLOBALS['dbaseName']);
-		$qry = "Select materielID, nom, localisation, etat from materiel where groupe <> materielID";
+		$qry = "Select materielID, nom, localisation, etat from materiel where groupe <> materielID  order by localisation";
 		$jsonData = null;
 		
 		$result = $db->query($qry);
@@ -27,7 +27,7 @@
 			$jsonData .= utf8_encode("\"localisation\":\"$row[2]\" ,");
 			$jsonData .= utf8_encode("\"etat\":\"$row[3]\" } ");
 			
-		}	
+		}
 		
 		$jsonData .= " ]}";
 		echo $jsonData; 
@@ -73,7 +73,7 @@
 	}
 
 	
-	function majStatus($a_matos, $a_action) {
+	function setStatus($a_matos, $a_action) {
 		
 		$qry = "Select groupe from materiel where materielID = $a_matos";
 		$sqlCmdMatos = "update materiel set etat='$a_action' where materielID=$a_matos";

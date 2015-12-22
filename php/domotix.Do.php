@@ -6,6 +6,6 @@
 	$action =(isset($_GET['action'])) ? $_GET['action'] : NULL;
 	
 	$ret = executer($matos,$action);
-	$ret = majStatus($matos,$action);
+	$ret = setStatus($matos,$action);
 	
 ?>

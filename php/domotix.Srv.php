@@ -16,7 +16,7 @@
 			$res = executer($materiel,$action);
 			$ret = majStatus($materiel, $action);
 		}
-		sleep(20);
+		sleep(60);
 	}
 
 ?>
