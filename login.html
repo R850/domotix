@@ -8,40 +8,37 @@
 		<script src="./js/domotix.js"></script>		
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<script type="text/javascript" src="./js/domotix.js"></script>
+		<script type="text/javascript" src="./js/login.js"></script>
 	</HEAD>
 	<BODY>
-	
-<div class="container">
-	<div class="row">
-		<div class="col-sm-7">
-			<div class="text-center">
-				<h1>Domoti'X<br></h1>
-				<p class="lead">Environnement de DEVELOPPEMENT <br></p>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-7">
+				<div class="text-center">
+					<h1>Domoti'X<br></h1>
+					<p class="lead">Environnement de DEVELOPPEMENT <br></p>
+				</div>
+			</div>
+		</div> 	
+		<div class="row">
+			<div class="col-sm-2">
+			</div>
+			<div class="col-sm-3">
+				<form role="form">
+					<div class="form-group">
+						<label>Utilisateur :</label>
+						<input  class="form-control" id="login">
+					</div>
+					<div class="form-group">
+						<label for="pwd">Mot de passe :</label>
+						<input type="password" class="form-control" id="pwd">
+					</div>
+					<button type="submit" class="btn btn-default" onclick=getLoginInfo(CBK_Login)>Se connecter</button>
+				</form>
 			</div>
 		</div>
-	</div> 	
-	<div class="row">
-		<div class="col-sm-2">
-	    </div>
-		<div class="col-sm-3">
-			<form role="form">
-			<div class="form-group">
-			<label>Utilisateur :</label>
-			<input  class="form-control" id="user">
-			</div>
-			<div class="form-group">
-				<label for="pwd">Mot de passe :</label>
-				<input type="password" class="form-control" id="pwd">
-			</div>
-			<div class="checkbox">
-				<label><input type="checkbox"> Se souvenir de moi</label>
-			</div>
-			<button type="submit" class="btn btn-default">Se connecter</button>
-			</form>
-	  </div>
-	 </div>
- </div>
-  
+	</div>
   
   
 	<BODY>
